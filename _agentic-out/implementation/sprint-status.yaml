@@ -41,7 +41,7 @@
 # - Retrospective appends action_items; sprint-status surfaces open ones
 
 generated: 2026-08-13
-last_updated: 2026-08-14T16:56:18
+last_updated: 2026-08-14T17:24:35
 project: demo
 project_key: NOKEY
 tracking_system: file-system
@@ -50,7 +50,7 @@ story_location: _agentic-out/implementation/stories
 development_status:
   epic-1: in-progress
   1-1-初始化可持续交付的项目基线: done
-  1-2-客户提交企业入驻申请: backlog
+  1-2-客户提交企业入驻申请: ready-for-dev
   1-3-客户查看并修正入驻审核结果: backlog
   1-4-客户建立并终止安全登录会话: backlog
   1-5-内部人员受控审核及重置密码: backlog
