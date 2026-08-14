@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+.git
+.github
+_agentic-out
+.m2-review
+**/node_modules
+**/target
+**/dist
+**/*.log
+**/*.tsbuildinfo

@@ -1,0 +1,26 @@
+:root {
+  --background: #f5f7f8;
+  --foreground: #152521;
+  --card: #ffffff;
+  --popover: #ffffff;
+  --primary: #087f6b;
+  --primary-foreground: #ffffff;
+  --primary-soft: #e9f8f4;
+  --secondary: #edf4f2;
+  --muted: #edf4f2;
+  --muted-foreground: #5c716b;
+  --border: #d0dfdb;
+  --input: #d0dfdb;
+  --ring: #087f6b;
+  --sandbox: #087f9a;
+  --production: #b85c12;
+  --success: #18794e;
+  --warning: #a15c08;
+  --destructive: #bf3636;
+
+  /* Compatibility aliases for the baseline shell. */
+  --surface: var(--background);
+  --panel: var(--card);
+  --text: var(--foreground);
+  --focus: var(--ring);
+}

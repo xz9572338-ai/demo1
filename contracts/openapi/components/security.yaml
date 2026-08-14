@@ -1,0 +1,6 @@
+components:
+  securitySchemes:
+    ConsoleSession:
+      type: apiKey
+      in: cookie
+      name: SESSION

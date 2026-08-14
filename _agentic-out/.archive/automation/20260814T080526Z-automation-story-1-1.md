@@ -1,0 +1,33 @@
+---
+artifact_kind: test_automation
+source_story: ../implementation/stories/1-1-初始化可持续交付的项目基线.md
+status: complete
+date: 2026-08-14
+---
+
+# Story 1.1 自动化验证证据
+
+## 验收标准映射
+
+| AC | 自动化证据 | 结果 |
+|---|---|---|
+| AC1 应用骨架 | Maven reactor、TypeScript 类型检查、Vite 构建、ArchUnit 5 项规则 | 通过 |
+| AC2 本地可运行性 | Testcontainers MySQL、真实 `/actuator/health` HTTP 断言、Compose `up --wait` 三服务健康检查 | 通过 |
+| AC3 可重复构建 | 官方 Maven Wrapper 3.3.4 + Maven 3.9.11 SHA-256、`pnpm-lock.yaml`、Maven verify、前端 typecheck/test/build | 通过 |
+| AC4 契约与迁移 | 三份 OpenAPI lint；MySQL 空库迁移、基线表/schema history 断言、重复 validate/migrate/validate | 通过 |
+| AC5 CI 质量门槛 | API/Web/Contract workflow 均以失败退出；API/Web workflow 增加 Docker 镜像构建 | 自动化定义通过；required checks 的仓库规则证据待管理员提供 |
+
+## 2026-08-14 执行结果
+
+- `.\mvnw.cmd verify`：通过；6 tests，0 failures，0 errors。
+- `pnpm typecheck`：通过。
+- `pnpm test:web`：通过；1 test。
+- `pnpm build:web`：通过。
+- `pnpm validate:openapi`：通过；3 contracts，0 warnings/errors。
+- `docker compose --env-file .env -f deploy/compose/compose.local.yml config --quiet`：通过。
+- `docker compose --env-file .env -f deploy/compose/compose.local.yml up -d --wait`：通过；MySQL、Redis、数据中台模拟器均 healthy，端口仅绑定 `127.0.0.1`。
+- `docker build`：当前开发机访问 Docker Hub token 端点超时，且本机没有 `eclipse-temurin:21-jre`、`node:22.23.0-alpine` 缓存，未能本地完成；对应构建已进入 API/Web CI，联网 runner 将作为失败门槛执行。
+
+## 尚未闭合的外部证据
+
+- 仓库管理员需将 `API CI / verify`、`Web CI / verify`、`Contract CI / verify` 配置为 required checks，并提供规则或合并阻断运行证据；该项阻断 Story 进入 `done`。

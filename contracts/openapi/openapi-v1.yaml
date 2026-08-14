@@ -1,0 +1,7 @@
+openapi: 3.1.0
+info: { title: Open Platform Production API, version: 1.0.0, license: { name: Proprietary, identifier: LicenseRef-Proprietary } }
+servers: [{ url: /openapi/v1 }]
+paths: {}
+components:
+  schemas:
+    Error: { $ref: './components/errors.yaml#/components/schemas/Error' }

@@ -1,0 +1,40 @@
+name: open-platform-local
+services:
+  mysql:
+    image: mysql:8.4.7
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-open_platform}
+      MYSQL_USER: ${MYSQL_USER:-open_platform}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-local_only_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-local_only_root_password}
+    ports: ["127.0.0.1:${MYSQL_PORT:-3306}:3306"]
+    volumes: [mysql-data:/var/lib/mysql]
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=$${MYSQL_PASSWORD} mysql -h 127.0.0.1 -u$${MYSQL_USER} $${MYSQL_DATABASE} -e 'SELECT 1' --silent"]
+      start_period: 15s
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:8.4.0-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports: ["127.0.0.1:${REDIS_PORT:-6379}:6379"]
+    volumes: [redis-data:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  data-platform-simulator:
+    image: nginx:1.29.5-alpine
+    ports: ["127.0.0.1:${DATA_PLATFORM_SIMULATOR_PORT:-18080}:80"]
+    volumes:
+      - ../../tools/data-platform-simulator:/usr/share/nginx/html:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost/health.json | grep -q UP"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+volumes:
+  mysql-data:
+  redis-data:

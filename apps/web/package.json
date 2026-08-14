@@ -1,0 +1,32 @@
+{
+  "name": "@open-platform/web",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc -b --pretty false",
+    "build": "tsc -b && vite build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "5.1.1",
+    "vite": "7.2.4",
+    "typescript": "5.9.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "lucide-react": "0.577.0",
+    "clsx": "2.1.1",
+    "tailwind-merge": "3.5.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@tailwindcss/vite": "4.2.1",
+    "jsdom": "28.1.0",
+    "tailwindcss": "4.2.1",
+    "vitest": "4.1.0"
+  }
+}

@@ -1,0 +1,10 @@
+openapi: 3.1.0
+info: { title: Open Platform Console API, version: 1.0.0, license: { name: Proprietary, identifier: LicenseRef-Proprietary } }
+servers: [{ url: /console/api/v1 }]
+paths: {}
+components:
+  schemas:
+    Health: { $ref: './components/schemas.yaml#/components/schemas/Health' }
+    Error: { $ref: './components/errors.yaml#/components/schemas/Error' }
+  securitySchemes:
+    ConsoleSession: { $ref: './components/security.yaml#/components/securitySchemes/ConsoleSession' }

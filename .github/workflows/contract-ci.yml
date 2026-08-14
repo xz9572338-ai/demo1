@@ -1,0 +1,19 @@
+name: Contract CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.19.0 }
+      - uses: actions/setup-node@v6
+        with: { node-version: 22.23.0, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm validate:openapi
+      - run: docker compose --env-file .env.example -f deploy/compose/compose.local.yml config --quiet
+      - uses: actions/setup-java@v5
+        with: { distribution: temurin, java-version: '21', cache: maven }
+      - run: sh ./mvnw -pl apps/api -Dtest=OpenPlatformApplicationTests test

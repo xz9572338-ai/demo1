@@ -1,0 +1,16 @@
+.env
+.env.*.local
+.idea/
+.vscode/
+node_modules/
+target/
+dist/
+*.tsbuildinfo
+*.log
+deploy/compose/.data/
+.m2-review/
+.pnpm-store/
+/docker-prerequisites.ps1
+/enable-pnpm.ps1
+/install-docker-desktop.ps1
+/install-wsl.ps1

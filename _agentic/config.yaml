@@ -1,0 +1,28 @@
+# {project-root} resolves to: the git repo root of the current working directory,
+# falling back to the cwd itself; if _agentic/config.yaml is not found there,
+# workflows search upward for the nearest directory containing it.
+project_name: demo
+user_name: user
+user_skill_level: intermediate
+communication_language: zh-CN
+document_output_language: zh-CN
+
+output_folder: "{project-root}/_agentic-out"
+planning_artifacts: "{project-root}/_agentic-out/planning"
+implementation_artifacts: "{project-root}/_agentic-out/implementation"
+test_artifacts: "{project-root}/_agentic-out/tests"
+project_knowledge: "{project-root}/_agentic-out/project-knowledge"
+
+# Optional adaptive delivery default: quick | standard | assured.
+# Existing projects without this field retain the standard workflow gates.
+default_delivery_profile: standard
+
+test_stack_type: auto
+test_framework: auto # auto, playwright, cypress - explicit value overrides auto-detection
+testing_execution_mode: auto
+testing_capability_probe: true
+testing_use_playwright_utils: true
+testing_use_pactjs_utils: false
+testing_pact_mcp: none
+testing_browser_automation: auto
+testing_agent_username: agentic-testing

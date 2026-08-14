@@ -1,0 +1,108 @@
+# generated: 2026-08-13
+# last_updated: 2026-08-13
+# project: demo
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: _agentic-out/implementation/stories
+#
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created
+#   - in-progress → done: Manually when all stories reach done
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# Action Item Status:
+#   - open: Committed during a retrospective, not yet addressed
+#   - in-progress: Actively being worked on
+#   - done: Completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to in-progress automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates the next story after the previous one is done
+# - Dev moves a story to review, then runs code review
+# - Retrospective appends action_items; sprint-status surfaces open ones
+
+generated: 2026-08-13
+last_updated: 2026-08-14
+project: demo
+project_key: NOKEY
+tracking_system: file-system
+story_location: _agentic-out/implementation/stories
+
+development_status:
+  epic-1: in-progress
+  1-1-初始化可持续交付的项目基线: review
+  1-2-客户提交企业入驻申请: backlog
+  1-3-客户查看并修正入驻审核结果: backlog
+  1-4-客户建立并终止安全登录会话: backlog
+  1-5-内部人员受控审核及重置密码: backlog
+  1-6-平台建立企业租户安全上下文: backlog
+  1-7-平台记录不可变的关键操作审计: backlog
+  1-8-授权人员查询审计与状态历史: backlog
+  epic-1-retrospective: optional
+
+  epic-2: backlog
+  2-1-客户创建并查看本企业应用: backlog
+  2-2-安全交付仅首次可见的沙箱密钥: backlog
+  2-3-隔离管理沙箱与生产凭证: backlog
+  2-4-客户停用和恢复应用: backlog
+  2-5-客户安全轮换应用密钥: backlog
+  2-6-隔离沙箱与生产的运行边界: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-客户查看并提交逐接口权限申请: backlog
+  3-2-客户查看权限审核状态和原因: backlog
+  3-3-业务产品受控审批和撤销接口权限: backlog
+  3-4-绑定企业应用与业务客户主数据: backlog
+  3-5-批准并执行字段开放清单: backlog
+  3-6-客户与技术负责人查看生产准备状态: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-建立三个接口的-openapi-v1-契约基线: backlog
+  4-2-客户浏览完整且可导航的-api-文档: backlog
+  4-3-提供可复现的签名与调用示例: backlog
+  4-4-客户通过页面向沙箱发送测试请求-一期-1x: backlog
+  4-5-客户理解沙箱响应并从错误中恢复-一期-1x: backlog
+  epic-4-retrospective: optional
+
+  epic-5: backlog
+  5-1-建立开放-api-安全请求上下文: backlog
+  5-2-应用查询绑定范围内的客户基础信息: backlog
+  5-3-应用按增量条件查询订单列表: backlog
+  5-4-应用稳定分页遍历订单: backlog
+  5-5-应用查询订单详情并保持列表一致: backlog
+  5-6-平台正确处理数据中台故障和数据过期: backlog
+  5-7-按应用和接口执行基础限流: backlog
+  5-8-受控批准和执行客户额度调整: backlog
+  5-9-保护数据中台容量并隔离异常客户: backlog
+  5-10-验证生产查询性能安全与只读边界: backlog
+  5-11-技术负责人完成最终生产验收并启用访问: backlog
+  epic-5-retrospective: optional
+
+  epic-6: backlog
+  6-1-为调用生成统一事件和诊断分类: backlog
+  6-2-聚合应用和接口调用统计: backlog
+  6-3-客户查看近七天调用统计-按接口筛选为一期-1x: backlog
+  6-4-内部人员按统一条件检索调用记录: backlog
+  6-5-技术负责人记录并闭环客户问题: backlog
+  epic-6-retrospective: optional

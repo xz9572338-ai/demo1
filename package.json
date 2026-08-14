@@ -1,0 +1,18 @@
+{
+  "name": "open-platform",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": ">=22.12.0 <23"
+  },
+  "scripts": {
+    "dev:web": "pnpm --filter @open-platform/web dev",
+    "typecheck": "pnpm --filter @open-platform/web typecheck",
+    "build:web": "pnpm --filter @open-platform/web build",
+    "test:web": "pnpm --filter @open-platform/web test",
+    "validate:openapi": "redocly lint contracts/openapi/console-v1.yaml contracts/openapi/openapi-v1.yaml contracts/openapi/sandbox-v1.yaml"
+  },
+  "devDependencies": {
+    "@redocly/cli": "2.20.0"
+  }
+}
