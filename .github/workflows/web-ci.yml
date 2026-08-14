@@ -4,6 +4,7 @@ permissions:
   contents: read
 jobs:
   verify:
+    name: Web CI / verify
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

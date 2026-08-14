@@ -7,7 +7,7 @@ iteration: null
 # frontmatter delivery_profile takes precedence; config is the lower fallback.
 delivery_profile: null
 generated_at: "2026-08-11T07:23:25+00:00"
-updated_at: "2026-08-14T08:07:48+00:00"
+updated_at: "2026-08-14T09:01:29+00:00"
 
 artifacts:
   product_brief:
@@ -81,9 +81,9 @@ artifacts:
   # (see workflow_gates), so its absence must not mark stories as stale.
   story:
     type: implementation
-    path: "_agentic-out/implementation/stories/1-1-初始化可持续交付的项目基线.md"
-    status: in-progress
-    updated_at: "2026-08-14T08:07:48+00:00"
+    path: "_agentic-out\implementation\stories\1-1-初始化可持续交付的项目基线.md"
+    status: complete
+    updated_at: "2026-08-14T16:56:18+08:00"
     depends_on:
       - sprint_status
     produced_by: agentic-create-story
@@ -116,7 +116,7 @@ artifacts:
     type: tests
     path: "_agentic-out/tests/automation-story-1-1.md"
     status: complete
-    updated_at: "2026-08-14T08:07:48+00:00"
+    updated_at: "2026-08-14T09:01:29+00:00"
     depends_on:
       - story
       - test_framework

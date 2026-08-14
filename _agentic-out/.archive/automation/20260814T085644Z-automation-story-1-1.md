@@ -33,7 +33,6 @@ date: 2026-08-14
 - 仓库：[xz9572338-ai/demo1](https://github.com/xz9572338-ai/demo1)，基线提交 `afddd868b1277536021b5092a4da0f3432adf1d0`。
 - `main` 已启用严格状态检查，要求 `API CI / verify`、`Web CI / verify`、`Contract CI / verify`，管理员不可绕过，禁止强推和删除，并要求会话已解决。
 - 三项 Actions 在基线提交上均为 `success`：API run `31784835523`、Web run `31784835474`、Contract run `31784835487`。
-- PR #1 首次合并验证发现默认 Job 名均为 `verify`，已将三个 Job 显式命名为保护规则要求的唯一上下文；以 PR 更新后的三项检查与实际合并结果作为最终门禁证据。
 
 代码评审的本地修复及对应 Story 需求变更日志已于 2026-08-14 同步完成。
 
