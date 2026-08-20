@@ -8,9 +8,12 @@
   "scripts": {
     "dev:web": "pnpm --filter @open-platform/web dev",
     "typecheck": "pnpm --filter @open-platform/web typecheck",
-    "build:web": "pnpm --filter @open-platform/web build",
+    "build:web": "pnpm generate:public-api-docs && pnpm --filter @open-platform/web build",
     "test:web": "pnpm --filter @open-platform/web test",
-    "validate:openapi": "redocly lint contracts/openapi/console-v1.yaml contracts/openapi/openapi-v1.yaml contracts/openapi/sandbox-v1.yaml"
+    "generate:api": "pnpm --filter @open-platform/web generate:api",
+    "validate:openapi": "redocly lint contracts/openapi/console-v1.yaml contracts/openapi/openapi-v1.yaml contracts/openapi/sandbox-v1.yaml",
+    "validate:public-api": "pnpm generate:public-api-docs && node scripts/validate-public-api.mjs",
+    "generate:public-api-docs": "node scripts/generate-public-api-docs.mjs"
   },
   "devDependencies": {
     "@redocly/cli": "2.20.0"

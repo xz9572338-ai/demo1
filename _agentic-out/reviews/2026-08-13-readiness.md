@@ -1,5 +1,7 @@
 # Implementation Readiness Assessment Report
 
+> 2026-08-16 增量复核：已核对架构中的 Redis 跨实例匿名注册限流、可信代理解析与失败关闭补充。该变更落实 Story 1.2 既有安全/容量验收边界，不改变 PRD、Epic/Story 覆盖或本报告“无阻断项”的结论。
+
 **Date:** 2026-08-13  
 **Project:** 轻量化开放平台
 

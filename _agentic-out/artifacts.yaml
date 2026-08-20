@@ -7,21 +7,21 @@ iteration: null
 # frontmatter delivery_profile takes precedence; config is the lower fallback.
 delivery_profile: null
 generated_at: "2026-08-11T07:23:25+00:00"
-updated_at: "2026-08-14T09:24:34+00:00"
+updated_at: "2026-08-18T08:36:17+00:00"
 
 artifacts:
   product_brief:
     type: planning
     path: "_agentic-out\\planning\\product-brief.md"
     status: complete
-    updated_at: "2026-08-11T07:23:41+00:00"
+    updated_at: "2026-08-14T16:38:46+08:00"
     depends_on: []
     produced_by: agentic-product-brief
   prd:
     type: planning
     path: "_agentic-out\\planning\\prd.md"
     status: complete
-    updated_at: "2026-08-11T12:46:53.606810+00:00"
+    updated_at: "2026-08-17T14:21:12+08:00"
     depends_on:
       - product_brief
     produced_by: agentic-create-prd
@@ -34,7 +34,7 @@ artifacts:
     type: planning
     path: "_agentic-out\\planning\\ux-design-specification.md"
     status: complete
-    updated_at: "2026-08-12T02:59:10+00:00"
+    updated_at: "2026-08-17T14:21:12+08:00"
     depends_on:
       - prd
     produced_by: agentic-create-ux-design
@@ -42,7 +42,7 @@ artifacts:
     type: planning
     path: "_agentic-out\\planning\\architecture.md"
     status: complete
-    updated_at: "2026-08-12T07:28:11+00:00"
+    updated_at: "2026-08-17T06:22:00+00:00"
     depends_on:
       - prd
     produced_by: agentic-create-architecture
@@ -53,16 +53,16 @@ artifacts:
     type: planning
     path: "_agentic-out\\planning\\epics.md"
     status: complete
-    updated_at: "2026-08-12T11:30:23+00:00"
+    updated_at: "2026-08-17T06:22:01+00:00"
     depends_on:
       - prd
       - architecture
     produced_by: agentic-create-epics-and-stories
   readiness:
     type: planning
-    path: "_agentic-out/reviews/2026-08-13-readiness.md"
+    path: "_agentic-out\\reviews\\2026-08-13-readiness.md"
     status: complete
-    updated_at: "2026-08-13T01:11:36+00:00"
+    updated_at: "2026-08-17T06:22:02+00:00"
     depends_on:
       - prd
       - architecture
@@ -70,9 +70,9 @@ artifacts:
     produced_by: agentic-check-implementation-readiness
   sprint_status:
     type: implementation
-    path: "_agentic-out/implementation/sprint-status.yaml"
+    path: "_agentic-out\\implementation\\sprint-status.yaml"
     status: complete
-    updated_at: "2026-08-13T01:13:10+00:00"
+    updated_at: "2026-08-18T14:38:36+08:00"
     depends_on:
       - epics
     produced_by: agentic-sprint-planning
@@ -81,9 +81,9 @@ artifacts:
   # (see workflow_gates), so its absence must not mark stories as stale.
   story:
     type: implementation
-    path: "_agentic-out/implementation/stories/1-2-客户提交企业入驻申请.md"
-    status: present
-    updated_at: "2026-08-14T09:24:34+00:00"
+    path: "_agentic-out/implementation/stories/5-1-实现开放-api-安全入口.md"
+    status: in-progress
+    updated_at: "2026-08-18T08:36:17+00:00"
     depends_on:
       - sprint_status
     produced_by: agentic-create-story
@@ -114,18 +114,17 @@ artifacts:
     produced_by: agentic-test-framework
   automation:
     type: tests
-    path: "_agentic-out/tests/automation-story-1-1.md"
-    status: complete
-    updated_at: "2026-08-14T09:14:38+00:00"
+    path: "_agentic-out\\tests\\automation-story-3-1.md"
+    status: stale
+    updated_at: "2026-08-18T11:34:17+08:00"
     depends_on:
       - story
-      - test_framework
     produced_by: agentic-test-automation
   traceability:
     type: tests
-    path: null
-    status: missing
-    updated_at: null
+    path: "_agentic-out\\tests\\traceability-story-4-1.md"
+    status: complete
+    updated_at: "2026-08-18T14:38:36+08:00"
     depends_on:
       - prd
       - epics
@@ -143,7 +142,7 @@ artifacts:
     type: planning
     path: "_agentic-out\\planning\\research\\product-brief-distillate.md"
     status: complete
-    updated_at: "2026-08-11T07:23:41+00:00"
+    updated_at: "2026-08-14T16:38:46+08:00"
     depends_on: []
     produced_by: agentic-market-research # also: agentic-domain-research, agentic-technical-research, agentic-brainstorming and other research/ideation skills
   project_knowledge:

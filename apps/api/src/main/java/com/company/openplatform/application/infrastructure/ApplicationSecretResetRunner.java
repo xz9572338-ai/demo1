@@ -1,0 +1,8 @@
+package com.company.openplatform.application.infrastructure;
+import com.company.openplatform.application.application.ApplicationService; import org.springframework.boot.ApplicationArguments; import org.springframework.boot.ApplicationRunner; import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty; import org.springframework.beans.factory.annotation.Value; import org.springframework.stereotype.Component;
+@Component @ConditionalOnProperty(name="open-platform.maintenance.secret-reset.enabled",havingValue="true")
+public final class ApplicationSecretResetRunner implements ApplicationRunner {
+ private final ApplicationService service; private final String applicationId,reason,operator,checker,evidence,requestId;
+ public ApplicationSecretResetRunner(ApplicationService service,@Value("${open-platform.maintenance.secret-reset.application-id}")String applicationId,@Value("${open-platform.maintenance.secret-reset.reason}")String reason,@Value("${open-platform.maintenance.secret-reset.operator}")String operator,@Value("${open-platform.maintenance.secret-reset.checker}")String checker,@Value("${open-platform.maintenance.secret-reset.evidence}")String evidence,@Value("${open-platform.maintenance.secret-reset.request-id}")String requestId){this.service=service;this.applicationId=applicationId;this.reason=reason;this.operator=operator;this.checker=checker;this.evidence=evidence;this.requestId=requestId;}
+ @Override public void run(ApplicationArguments args){String secret=service.resetSandboxSecret(applicationId,reason,operator,checker,evidence,requestId);System.out.println("SANDBOX_APP_SECRET="+secret);}
+}

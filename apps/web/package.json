@@ -7,25 +7,31 @@
     "dev": "vite",
     "typecheck": "tsc -b --pretty false",
     "build": "tsc -b && vite build",
-    "test": "vitest run"
+    "test": "vitest run",
+    "generate:api": "openapi-typescript ../../contracts/openapi/console-v1.yaml -o src/generated/api/console-v1.ts"
   },
   "dependencies": {
     "@vitejs/plugin-react": "5.1.1",
-    "vite": "7.2.4",
-    "typescript": "5.9.3",
+    "clsx": "2.1.1",
+    "lucide-react": "0.577.0",
+    "openapi-fetch": "^0.17.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "lucide-react": "0.577.0",
-    "clsx": "2.1.1",
-    "tailwind-merge": "3.5.0"
+    "react-router-dom": "7.13.1",
+    "tailwind-merge": "3.5.0",
+    "typescript": "5.9.3",
+    "vite": "7.2.4"
   },
   "devDependencies": {
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
+    "@tailwindcss/vite": "4.2.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
-    "@tailwindcss/vite": "4.2.1",
+    "@types/axe-core": "^3.0.6",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "axe-core": "^4.13.0",
     "jsdom": "28.1.0",
+    "openapi-typescript": "^7.13.0",
     "tailwindcss": "4.2.1",
     "vitest": "4.1.0"
   }

@@ -16,13 +16,24 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.mysql.MySQLContainer;
+import org.testcontainers.containers.GenericContainer;
+import org.springframework.test.context.TestPropertySource;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(properties = {
+        "open-platform.security.phone-key=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "open-platform.security.app-secret-key=BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=",
+        "open-platform.security.app-secret-key-id=app-test-v1",
+        "open-platform.security.login.identifier-hmac-key=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "open-platform.security.phone-key-id=test-v1"})
 class OpenPlatformApplicationTests {
     @Container
     @ServiceConnection
     static final MySQLContainer MYSQL = new MySQLContainer("mysql:8.4.7");
+    @Container
+    @ServiceConnection(name = "redis")
+    static final GenericContainer<?> REDIS = new GenericContainer<>("redis:8.4.0-alpine").withExposedPorts(6379);
 
     private final JdbcTemplate jdbcTemplate;
     private final Flyway flyway;

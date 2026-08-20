@@ -1,12 +1,15 @@
+import { RegistrationPage } from "../features/onboarding/RegistrationPage";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { LoginPage } from "../features/auth/LoginPage";
+import { SessionGuard } from "../features/auth/SessionGuard";
+
 export function App() {
   return (
-    <main className="shell">
+    <BrowserRouter><div className="shell">
       <header className="masthead"><span className="brand-mark" aria-hidden="true">OP</span><span>轻量化开放平台</span></header>
-      <section className="hero" aria-labelledby="page-title">
-        <p className="eyebrow">供应链 API 接入</p>
-        <h1 id="page-title">项目基线已就绪</h1>
-        <p>客户控制台将在后续故事中逐步提供注册、应用、权限、文档和调用统计能力。</p>
-      </section>
-    </main>
+      <Routes><Route path="/" element={<Navigate to="/register" replace />} /><Route path="/register" element={<RegistrationPage />} />
+        <Route path="/login" element={<LoginPage />} /><Route path="/onboarding/status" element={<SessionGuard expectedPath="/onboarding/status" />} />
+        <Route path="/dashboard" element={<SessionGuard expectedPath="/dashboard" />} /><Route path="/applications" element={<SessionGuard expectedPath="/applications" />} /><Route path="/permissions" element={<SessionGuard expectedPath="/permissions" />} /><Route path="/api-docs" element={<SessionGuard expectedPath="/api-docs" />} /><Route path="*" element={<main><h1>页面不存在</h1></main>} /></Routes>
+    </div></BrowserRouter>
   );
 }

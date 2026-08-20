@@ -5,6 +5,41 @@ spring:
     open-in-view: false
   flyway:
     enabled: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  session:
+    timeout: 30m
+    redis:
+      namespace: open-platform:console:session
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+open-platform:
+  security:
+    phone-key: ${PHONE_ENCRYPTION_KEY:}
+    phone-key-id: ${PHONE_ENCRYPTION_KEY_ID:}
+    app-secret-key: ${APP_SECRET_ENCRYPTION_KEY}
+    app-secret-key-id: ${APP_SECRET_ENCRYPTION_KEY_ID}
+    open-api-dummy-hmac-key: ${OPEN_API_DUMMY_HMAC_KEY}
+    trusted-proxies: ${TRUSTED_PROXY_ADDRESSES:127.0.0.1,::1}
+    registration-rate:
+      abuse-per-minute: ${REGISTRATION_ABUSE_RPM:30}
+      business-per-minute: ${REGISTRATION_BUSINESS_RPM:10}
+    login:
+      identifier-hmac-key: ${LOGIN_IDENTIFIER_HMAC_KEY:${PHONE_ENCRYPTION_KEY:}}
+      account-limit: ${LOGIN_ACCOUNT_LIMIT:5}
+      ip-limit: ${LOGIN_IP_LIMIT:20}
+      window-seconds: ${LOGIN_FAILURE_WINDOW_SECONDS:900}
+      lock-seconds: ${LOGIN_LOCK_SECONDS:1800}
+server:
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: true
+        same-site: strict
 management:
   endpoints:
     web:

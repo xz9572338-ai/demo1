@@ -1,7 +1,17 @@
 openapi: 3.1.0
 info: { title: Open Platform Sandbox API, version: 1.0.0, license: { name: Proprietary, identifier: LicenseRef-Proprietary } }
 servers: [{ url: /sandbox/v1 }]
-paths: {}
+paths:
+  /customers/{customerId}: { $ref: './components/public-api.yaml#/paths/Customer' }
+  /orders: { $ref: './components/public-api.yaml#/paths/Orders' }
+  /orders/{orderId}: { $ref: './components/public-api.yaml#/paths/Order' }
 components:
+  x-signing: { $ref: './components/public-api.yaml#/components/x-signing' }
+  x-error-catalog: { $ref: './components/public-api.yaml#/components/x-error-catalog' }
+  securitySchemes:
+    AppId: { $ref: './components/public-api.yaml#/components/securitySchemes/AppId' }
+    Timestamp: { $ref: './components/public-api.yaml#/components/securitySchemes/Timestamp' }
+    Nonce: { $ref: './components/public-api.yaml#/components/securitySchemes/Nonce' }
+    Signature: { $ref: './components/public-api.yaml#/components/securitySchemes/Signature' }
   schemas:
-    Error: { $ref: './components/errors.yaml#/components/schemas/Error' }
+    Error: { $ref: './components/public-api.yaml#/components/schemas/Error' }

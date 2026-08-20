@@ -1,0 +1,124 @@
+paths:
+  Customer:
+    get:
+      operationId: getCustomer
+      summary: 查询客户基础信息
+      description: 需要 CUSTOMER_BASE_READ 权限。返回当前应用绑定客户范围内的脱敏信息。
+      security: [{ AppId: [], Timestamp: [], Nonce: [], Signature: [] }]
+      parameters:
+        - { name: customerId, in: path, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200': { description: 查询成功, headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }, content: { application/json: { schema: { $ref: '#/components/schemas/CustomerResponse' }, example: { data: { customerId: '11111111-1111-4111-8111-111111111111', name: 示例客户, contactMobile: '138****5678', shippingAddress: '上海市浦东新区******' }, requestId: req_doc_customer } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/Unavailable' }
+  Orders:
+    get:
+      operationId: listOrders
+      summary: 查询订单列表
+      description: 需要 ORDER_LIST_READ 权限。查询范围最长 31 天，按 updatedAt、orderId 升序稳定分页。
+      security: [{ AppId: [], Timestamp: [], Nonce: [], Signature: [] }]
+      parameters:
+        - { name: startTime, in: query, required: true, schema: { type: string, format: date-time } }
+        - { name: endTime, in: query, required: true, schema: { type: string, format: date-time } }
+        - { name: page, in: query, required: false, schema: { type: integer, minimum: 1, default: 1 } }
+        - { name: pageSize, in: query, required: false, schema: { type: integer, minimum: 1, maximum: 100, default: 20 } }
+      responses:
+        '200': { description: 查询成功, headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }, content: { application/json: { schema: { $ref: '#/components/schemas/OrderListResponse' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/Unavailable' }
+  Order:
+    get:
+      operationId: getOrder
+      summary: 查询订单详情
+      description: 需要 ORDER_DETAIL_READ 权限。仅返回当前应用绑定客户范围内的订单。
+      security: [{ AppId: [], Timestamp: [], Nonce: [], Signature: [] }]
+      parameters:
+        - { name: orderId, in: path, required: true, schema: { type: string, pattern: '^[A-Za-z0-9_-]{1,64}$' } }
+      responses:
+        '200': { description: 查询成功, headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }, content: { application/json: { schema: { $ref: '#/components/schemas/OrderResponse' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/Unavailable' }
+components:
+  x-signing:
+    algorithm: HMAC-SHA256
+    encoding: UTF-8
+    output: lowercase hexadecimal
+    timestampWindowSeconds: 300
+    canonicalTemplate: "METHOD\nPATH\nCANONICAL_QUERY\nBODY_SHA256\nAPP_ID\nTIMESTAMP\nNONCE"
+    rules:
+      - HTTP 方法必须大写；路径必须与请求路径逐字一致且不得自行增加尾斜杠
+      - 查询键和值按 RFC 3986 编码，百分号十六进制使用大写，编码后先按键再按值的 ASCII 字节升序排列
+      - 重复查询参数全部保留；空值表示为 key=；待签名串固定使用 LF 分隔且字段本身不得包含换行
+      - 请求体摘要和最终签名使用小写十六进制；GET 空请求体仍计算 SHA-256
+  x-error-catalog:
+    - { code: VALIDATION_FAILED, httpStatus: 400, retryable: false, action: 检查请求参数 }
+    - { code: SIGNATURE_INVALID, httpStatus: 401, retryable: false, action: 检查规范化、UTF-8、正文摘要与密钥 }
+    - { code: TIMESTAMP_EXPIRED, httpStatus: 401, retryable: true, action: 同步时钟并在正负 5 分钟内重试 }
+    - { code: NONCE_REPLAYED, httpStatus: 401, retryable: true, action: 生成新的 nonce 后重试 }
+    - { code: APPLICATION_INACTIVE, httpStatus: 403, retryable: false, action: 启用应用或联系技术负责人 }
+    - { code: ENVIRONMENT_MISMATCH, httpStatus: 403, retryable: false, action: 使用与凭证匹配的环境 }
+    - { code: PERMISSION_DENIED, httpStatus: 403, retryable: false, action: 申请并等待接口权限通过 }
+    - { code: RESOURCE_FORBIDDEN, httpStatus: 403, retryable: false, action: 检查客户数据范围 }
+    - { code: NOT_FOUND, httpStatus: 404, retryable: false, action: 检查业务标识 }
+    - { code: RATE_LIMITED, httpStatus: 429, retryable: true, action: 按 Retry-After 退避重试 }
+    - { code: DATA_HUB_TIMEOUT, httpStatus: 503, retryable: true, action: 使用同一 Request ID 稍后重试 }
+    - { code: SERVICE_UNAVAILABLE, httpStatus: 503, retryable: true, action: 稍后重试或联系支持 }
+    - { code: INTERNAL_ERROR, httpStatus: 500, retryable: true, action: 使用 Request ID 联系支持 }
+  securitySchemes:
+    AppId: { type: apiKey, in: header, name: X-App-ID, description: 应用 AppID }
+    Timestamp: { type: apiKey, in: header, name: X-Timestamp, description: Unix 秒时间戳，允许服务器时间正负 300 秒 }
+    Nonce: { type: apiKey, in: header, name: X-Nonce, description: 时间窗口内唯一的随机字符串 }
+    Signature: { type: apiKey, in: header, name: X-Signature, description: 待签名串的 HMAC-SHA256 小写十六进制值 }
+  headers:
+    RequestId: { required: true, schema: { type: string }, description: 排错请求标识 }
+  schemas:
+    Customer: { type: object, additionalProperties: false, required: [customerId, name, contactMobile, shippingAddress], properties: { customerId: { type: string, format: uuid }, name: { type: string }, contactMobile: { type: string, description: 仅展示前三后四位 }, shippingAddress: { type: string, description: 仅展示省市区，详细地址掩码 } } }
+    OrderSummaryBase: { type: object, required: [orderId, status, amount, updatedAt], properties: { orderId: { type: string }, status: { type: string, enum: [CREATED, PROCESSING, COMPLETED, CANCELLED] }, amount: { type: string, maxLength: 18, pattern: '^\d{1,15}\.\d{2}$' }, updatedAt: { type: string, format: date-time } } }
+    OrderSummary: { allOf: [{ $ref: '#/components/schemas/OrderSummaryBase' }], unevaluatedProperties: false }
+    OrderDetail:
+      allOf:
+        - { $ref: '#/components/schemas/OrderSummaryBase' }
+        - type: object
+          required: [customerId, receiverMobile, shippingAddress, items]
+          properties:
+            customerId: { type: string, format: uuid }
+            receiverMobile: { type: string, description: 仅展示前三后四位 }
+            shippingAddress: { type: string, description: 仅展示省市区，详细地址掩码 }
+            items: { type: array, items: { type: object, additionalProperties: false, required: [sku, quantity], properties: { sku: { type: string }, quantity: { type: integer, minimum: 1 } } } }
+      unevaluatedProperties: false
+    Page: { type: object, additionalProperties: false, required: [page, pageSize, total], properties: { page: { type: integer }, pageSize: { type: integer }, total: { type: integer } } }
+    CustomerResponse: { type: object, additionalProperties: false, required: [data, requestId], properties: { data: { $ref: '#/components/schemas/Customer' }, requestId: { type: string } } }
+    OrderResponse: { type: object, additionalProperties: false, required: [data, requestId], properties: { data: { $ref: '#/components/schemas/OrderDetail' }, requestId: { type: string } } }
+    OrderListResponse: { type: object, additionalProperties: false, required: [data, page, requestId], properties: { data: { type: array, items: { $ref: '#/components/schemas/OrderSummary' } }, page: { $ref: '#/components/schemas/Page' }, requestId: { type: string } } }
+    Error:
+      type: object
+      additionalProperties: false
+      required: [code, message, requestId, retryable, details]
+      properties:
+        code: { type: string, enum: [VALIDATION_FAILED, SIGNATURE_INVALID, TIMESTAMP_EXPIRED, NONCE_REPLAYED, APPLICATION_INACTIVE, ENVIRONMENT_MISMATCH, PERMISSION_DENIED, RESOURCE_FORBIDDEN, NOT_FOUND, RATE_LIMITED, DATA_HUB_TIMEOUT, SERVICE_UNAVAILABLE, INTERNAL_ERROR] }
+        message: { type: string }
+        requestId: { type: string }
+        retryable: { type: boolean }
+        details: { type: array, items: { type: object, additionalProperties: true } }
+  responses:
+    BadRequest: { description: 参数错误, headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Unauthorized: { description: AppID、签名、时间戳或 nonce 无效, headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Forbidden: { description: 应用停用、环境不匹配、无接口权限或资源越权, headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    NotFound: { description: 资源不存在, headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    RateLimited: { description: 每应用每环境 60 RPM，突发 20, headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' }, Retry-After: { required: true, schema: { type: integer, minimum: 0 } } }, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Unavailable: { description: 平台或数据中台暂时不可用, headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    InternalError: { description: 平台内部错误, headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }

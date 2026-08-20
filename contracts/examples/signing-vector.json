@@ -1,0 +1,12 @@
+{
+  "appId": "app_test_documentation_only",
+  "appSecret": "test_secret_not_for_production_123456",
+  "timestamp": "1787018400",
+  "nonce": "doc-example-nonce-0001",
+  "method": "GET",
+  "path": "/orders",
+  "query": "endTime=2026-08-18T02%3A00%3A00Z&page=1&pageSize=20&startTime=2026-08-18T01%3A00%3A00Z",
+  "bodySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "canonicalRequest": "GET\n/orders\nendTime=2026-08-18T02%3A00%3A00Z&page=1&pageSize=20&startTime=2026-08-18T01%3A00%3A00Z\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\napp_test_documentation_only\n1787018400\ndoc-example-nonce-0001",
+  "expectedSignature": "e0879666810deea6b1468351c532140f276e0ce4b270391d0f089e99a7d54818"
+}

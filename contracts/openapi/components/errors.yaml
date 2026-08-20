@@ -9,5 +9,12 @@ components:
         requestId: { type: string }
         details:
           type: array
-          items: { type: object, additionalProperties: true }
+          items:
+            type: object
+            required: [field, code, message]
+            properties:
+              field: { type: string }
+              code: { type: string }
+              message: { type: string }
+            additionalProperties: false
         retryable: { type: boolean }

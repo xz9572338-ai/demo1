@@ -29,7 +29,10 @@ class ModuleBoundaryTest {
 
     @ArchTest
     static final ArchRule application_must_not_depend_on_delivery_or_infrastructure = noClasses()
-            .that().resideInAPackage("..application..")
+            .that().resideInAnyPackage(
+                    "..identity.application..", "..application.application..", "..credential.application..",
+                    "..permission.application..", "..admission.application..", "..supplychain.application..",
+                    "..sandbox.application..", "..statistics.application..", "..audit.application..")
             .should().dependOnClassesThat().resideInAnyPackage("..api..", "..infrastructure..");
 
     @ArchTest
